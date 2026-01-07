@@ -221,11 +221,47 @@ body {
     box-shadow: 0 8px 25px var(--shadow-color), 0 0 0 1px var(--hetge-teal);
 }
 
-/* Hetge logo styling */
+/* Hetge card styling */
+.card-hetge {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0;
+}
+
+.hetge-image-wrapper {
+    width: 100%;
+    height: 120px;
+    overflow: hidden;
+    border-radius: 12px 12px 0 0;
+}
+
+.hetge-image-wrapper .card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-speed) ease;
+}
+
+.card-hetge:hover .card-image {
+    transform: scale(1.05);
+}
+
+.hetge-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.25rem 0rem;
+    gap: 0.4rem;
+}
+
 .hetge-logo {
-    height: 22px;
+    height: 32px;
     width: auto;
-    margin-bottom: 0.15rem;
+}
+
+.hetge-tagline {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
 }
 
 /* Spotify specific styling */
