@@ -1,0 +1,383 @@
+/* CSS Variables for Dark Theme */
+:root {
+    --bg-primary: #0d0d0d;
+    --bg-secondary: #1a1a1a;
+    --bg-card: #1a1a1a;
+    --border-color: #2a2a2a;
+    --text-primary: #f5f5f5;
+    --text-secondary: #a0a0a0;
+    --accent-color: #3b82f6;
+    --accent-hover: #60a5fa;
+    --spotify-green: #1db954;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --transition-speed: 0.3s;
+}
+
+/* Reset & Base */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Container */
+.container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+    opacity: 0;
+    animation: fadeIn 0.6s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+/* Profile Section */
+.profile {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.profile-image-wrapper {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 1.5rem;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid var(--border-color);
+    box-shadow: 0 4px 20px var(--shadow-color);
+    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+}
+
+.profile-image-wrapper:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 30px var(--shadow-color);
+}
+
+.profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-name {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+}
+
+.profile-bio {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.profile-location {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.profile-location .icon {
+    width: 16px;
+    height: 16px;
+}
+
+/* Cards Grid */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.projects-grid {
+    margin-bottom: 0;
+}
+
+/* Card Base */
+.card {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    padding: 1rem;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: all var(--transition-speed) ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+    opacity: 0;
+    transition: opacity var(--transition-speed) ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent-color);
+    box-shadow: 0 8px 25px var(--shadow-color), 0 0 0 1px var(--accent-color);
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+
+/* Card Icon */
+.card-icon {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    color: var(--text-primary);
+    transition: color var(--transition-speed) ease;
+}
+
+.card:hover .card-icon {
+    color: var(--accent-color);
+}
+
+/* Spotify specific styling */
+.card-spotify:hover {
+    border-color: var(--spotify-green);
+    box-shadow: 0 8px 25px var(--shadow-color), 0 0 0 1px var(--spotify-green);
+}
+
+.card-spotify:hover .card-icon {
+    color: var(--spotify-green);
+}
+
+.spotify-icon {
+    width: 40px;
+    height: 40px;
+}
+
+/* Card Content */
+.card-content {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.card-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-subtitle {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Project Card with Image */
+.card-project {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0;
+    overflow: hidden;
+}
+
+.card-image-wrapper {
+    width: 100%;
+    height: 120px;
+    overflow: hidden;
+}
+
+.card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-speed) ease;
+}
+
+.card-project:hover .card-image {
+    transform: scale(1.05);
+}
+
+.card-project .card-content {
+    padding: 1rem;
+}
+
+.card-project .card-icon {
+    margin: 1rem;
+    margin-bottom: 0;
+}
+
+.card-project.card-spotify {
+    flex-direction: row;
+    align-items: center;
+    padding: 1rem;
+}
+
+.card-project.card-spotify .card-content {
+    padding: 0;
+}
+
+/* Responsive Design */
+
+/* Tablet and up */
+@media (min-width: 768px) {
+    .container {
+        padding: 4rem 2rem;
+    }
+
+    .profile-image-wrapper {
+        width: 140px;
+        height: 140px;
+    }
+
+    .profile-name {
+        font-size: 2.5rem;
+    }
+
+    .profile-bio {
+        font-size: 1.1rem;
+    }
+
+    .cards-grid {
+        gap: 1.25rem;
+    }
+
+    .card {
+        padding: 1.25rem;
+    }
+
+    .card-icon {
+        width: 36px;
+        height: 36px;
+    }
+
+    .card-title {
+        font-size: 1rem;
+    }
+
+    .card-subtitle {
+        font-size: 0.85rem;
+    }
+
+    .card-image-wrapper {
+        height: 140px;
+    }
+}
+
+/* Mobile - Single column */
+@media (max-width: 550px) {
+    .container {
+        padding: 2rem 1rem;
+    }
+
+    .cards-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-image-wrapper {
+        width: 100px;
+        height: 100px;
+    }
+
+    .profile-name {
+        font-size: 1.75rem;
+    }
+
+    .profile-bio {
+        font-size: 0.95rem;
+    }
+
+    .card {
+        padding: 0.875rem;
+    }
+
+    .card-icon {
+        width: 28px;
+        height: 28px;
+    }
+
+    .spotify-icon {
+        width: 36px;
+        height: 36px;
+    }
+
+    .card-image-wrapper {
+        height: 140px;
+    }
+}
+
+/* Hover effects disabled for touch devices */
+@media (hover: none) {
+    .card:hover {
+        transform: none;
+    }
+
+    .profile-image-wrapper:hover {
+        transform: none;
+    }
+
+    .card-project:hover .card-image {
+        transform: none;
+    }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Focus styles for accessibility */
+.card:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+.card:focus:not(:focus-visible) {
+    outline: none;
+}
+
+.card:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}
