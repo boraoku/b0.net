@@ -185,6 +185,83 @@ body {
     height: 40px;
 }
 
+/* Spotify Compact Card */
+.card-spotify-compact {
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+    overflow: hidden;
+}
+
+.card-spotify-compact:hover {
+    border-color: var(--spotify-green);
+    box-shadow: 0 8px 25px var(--shadow-color), 0 0 0 1px var(--spotify-green);
+}
+
+.spotify-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+    flex: 1;
+    gap: 0.15rem;
+}
+
+.spotify-logo {
+    width: 28px;
+    height: 28px;
+    margin-bottom: 0.4rem;
+}
+
+.spotify-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.spotify-subtitle {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.spotify-play-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.4rem 0.9rem;
+    background-color: var(--spotify-green);
+    color: #000;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 20px;
+    text-decoration: none;
+    margin-top: 0.6rem;
+    transition: transform var(--transition-speed) ease, background-color var(--transition-speed) ease;
+}
+
+.spotify-play-btn svg {
+    width: 14px;
+    height: 14px;
+}
+
+.spotify-play-btn:hover {
+    transform: scale(1.05);
+    background-color: #1ed760;
+}
+
+.spotify-cover {
+    width: 120px;
+    height: 100%;
+    min-height: 140px;
+    flex-shrink: 0;
+}
+
+.spotify-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 /* Card Content */
 .card-content {
     display: flex;
@@ -338,6 +415,11 @@ body {
 
     .card-image-wrapper {
         height: 140px;
+    }
+
+    .spotify-cover {
+        width: 100px;
+        min-height: 120px;
     }
 }
 
