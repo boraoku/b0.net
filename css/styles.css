@@ -11,6 +11,10 @@
     --spotify-green: #1db954;
     --shadow-color: rgba(0, 0, 0, 0.3);
     --transition-speed: 0.3s;
+    --twitter-red: #ff3040;
+    --photography-purple: #a855f7;
+    --github-orange: #f97316;
+    --hetge-teal: rgb(20, 191, 152);
 }
 
 /* Reset & Base */
@@ -94,6 +98,18 @@ body {
     margin-right: auto;
 }
 
+.profile-bio a,
+.profile-bio a:visited {
+    color: var(--text-primary);
+    font-weight: 600;
+    text-decoration: none;
+    transition: text-decoration var(--transition-speed) ease;
+}
+
+.profile-bio a:hover {
+    text-decoration: underline;
+}
+
 .profile-location {
     display: inline-flex;
     align-items: center;
@@ -168,6 +184,48 @@ body {
 
 .card:hover .card-icon {
     color: var(--accent-color);
+}
+
+/* Twitter/X hover - bright red */
+.card[href*="twitter"]:hover,
+.card[href*="x.com"]:hover {
+    border-color: var(--twitter-red);
+    box-shadow: 0 8px 25px var(--shadow-color), 0 0 0 1px var(--twitter-red);
+}
+.card[href*="twitter"]:hover .card-icon,
+.card[href*="x.com"]:hover .card-icon {
+    color: var(--twitter-red);
+}
+
+/* Photography/Behance hover - bright purple */
+.card[href*="behance"]:hover {
+    border-color: var(--photography-purple);
+    box-shadow: 0 8px 25px var(--shadow-color), 0 0 0 1px var(--photography-purple);
+}
+.card[href*="behance"]:hover .card-icon {
+    color: var(--photography-purple);
+}
+
+/* GitHub hover - bright orange */
+.card[href*="github"]:hover {
+    border-color: var(--github-orange);
+    box-shadow: 0 8px 25px var(--shadow-color), 0 0 0 1px var(--github-orange);
+}
+.card[href*="github"]:hover .card-icon {
+    color: var(--github-orange);
+}
+
+/* Hetge hover - teal */
+.card[href*="hetge"]:hover {
+    border-color: var(--hetge-teal);
+    box-shadow: 0 8px 25px var(--shadow-color), 0 0 0 1px var(--hetge-teal);
+}
+
+/* Hetge logo styling */
+.hetge-logo {
+    height: 22px;
+    width: auto;
+    margin-bottom: 0.15rem;
 }
 
 /* Spotify specific styling */
