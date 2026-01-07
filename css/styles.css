@@ -17,6 +17,58 @@
     --hetge-teal: rgb(20, 191, 152);
 }
 
+/* C64 Loading Screen */
+.c64-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #50459b;
+    z-index: 9998;
+    overflow: hidden;
+    transition: opacity 0.4s ease;
+}
+
+.c64-loader.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.c64-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.c64-line {
+    height: 3px;
+    width: 100%;
+    background-color: #50459b;
+}
+
+/* Loading Progress Bar */
+.loading-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: #40e8d0;
+    width: 0;
+    z-index: 9999;
+    transition: width 0.3s ease;
+    box-shadow: 0 0 10px #40e8d0;
+}
+
+.loading-bar.complete {
+    opacity: 0;
+    transition: width 0.3s ease, opacity 0.3s ease 0.2s;
+}
+
 /* Reset & Base */
 *, *::before, *::after {
     box-sizing: border-box;
@@ -47,11 +99,17 @@ body::before {
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: url('../images/background-sydney-sandstone.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     z-index: -2;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+body.bg-loaded::before {
+    background-image: url('../images/background-sydney-sandstone.jpg');
+    opacity: 1;
 }
 
 body::after {
@@ -72,6 +130,9 @@ body::after {
     margin: 0 auto;
     padding: 2rem 1.5rem;
     opacity: 0;
+}
+
+.container.loaded {
     animation: fadeIn 0.6s ease-out forwards;
 }
 
