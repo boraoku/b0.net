@@ -351,20 +351,6 @@ body::after {
     color: var(--text-secondary);
 }
 
-/* Spotify specific styling */
-.card-spotify:hover {
-    border-color: var(--spotify-green);
-    box-shadow: 0 8px 25px var(--shadow-color), 0 0 0 1px var(--spotify-green);
-}
-
-.card-spotify:hover .card-icon {
-    color: var(--spotify-green);
-}
-
-.spotify-icon {
-    width: 40px;
-    height: 40px;
-}
 
 /* Spotify Compact Card */
 .card.card-spotify-compact {
@@ -372,6 +358,7 @@ body::after {
     flex-direction: row;
     padding: 0;
     overflow: hidden;
+    min-height: 152px;
 }
 
 .card-spotify-compact:hover {
@@ -441,6 +428,123 @@ body::after {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+/* Spotify Custom Card */
+.card.card-spotify {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0;
+    overflow: visible;
+}
+
+.card-spotify:hover {
+    border-color: var(--spotify-green);
+    box-shadow: 0 8px 25px var(--shadow-color), 0 0 0 1px var(--spotify-green);
+}
+
+.spotify-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.85rem;
+    text-decoration: none;
+    color: inherit;
+    transition: background-color 0.15s ease;
+}
+
+.spotify-header:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Rock hand icon - white by default, green on hover */
+.rock-icon {
+    object-fit: contain;
+    object-position: center center;
+    filter: brightness(0) invert(1);
+    transition: filter 0.3s ease;
+}
+
+.spotify-header:hover .rock-icon {
+    filter: brightness(0) saturate(100%) invert(52%) sepia(84%) saturate(431%) hue-rotate(93deg) brightness(97%) contrast(92%);
+}
+
+.spotify-header-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.spotify-header .spotify-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.spotify-header .spotify-subtitle {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.spotify-tracklist {
+    flex: 1;
+    overflow-y: auto;
+    max-height: 180px;
+    padding: 0.4rem 0;
+    border-top: 1px solid var(--border-color);
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+}
+
+.spotify-tracklist::-webkit-scrollbar {
+    width: 6px;
+}
+
+.spotify-tracklist::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+.spotify-tracklist::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 3px;
+}
+
+.spotify-tracklist::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}
+
+.spotify-track {
+    display: flex;
+    align-items: center;
+    padding: 0.3rem 0.85rem 0.3rem 1.5rem;
+    transition: background-color 0.15s ease;
+}
+
+.spotify-track:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.track-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    gap: 0.1rem;
+}
+
+.track-name {
+    font-size: 0.8rem;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.track-artist {
+    font-size: 0.65rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* Card Content */
@@ -609,6 +713,10 @@ body::after {
     .spotify-cover {
         width: 100px;
         min-height: 120px;
+    }
+
+    .spotify-tracklist {
+        max-height: 180px;
     }
 }
 
