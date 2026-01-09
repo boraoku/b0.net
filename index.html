@@ -6,7 +6,12 @@
     <meta name="description" content="Bora Okumusoglu - Regional Tech Lead at Acciona, Geotech Founder at Hetge. Based in Sydney, Australia.">
     <meta name="theme-color" content="#121826">
     <title>Bora Okumusoglu</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <script>
+        // Cache busting: append timestamp to CSS and JS files
+        var cacheBuster = '?v=' + Date.now();
+        document.write('<link rel="stylesheet" href="css/styles.css' + cacheBuster + '">');
+    </script>
+    <noscript><link rel="stylesheet" href="css/styles.css"></noscript>
 </head>
 <body>
     <div class="c64-loader" id="c64Loader">
@@ -112,6 +117,6 @@
         </section>
     </main>
 
-    <script src="js/main.js"></script>
+    <script>document.write('<script src="js/main.js' + cacheBuster + '"><\/script>');</script>
 </body>
 </html>
