@@ -166,4 +166,48 @@
     updateProgress(5); // Initial progress to show activity
 
     Promise.all(imagesToLoad.map(preloadImage)).then(onAllLoaded);
+
+    // Spotify tracklist auto-scroll on hover
+    function initSpotifyScroll() {
+        var tracklist = document.querySelector('.spotify-tracklist');
+        var spotifyCard = document.querySelector('.card-spotify');
+        if (!tracklist || !spotifyCard) return;
+
+        var scrollInterval = null;
+        var scrollDirection = 1; // 1 = down, -1 = up
+        var scrollSpeed = 3; // pixels per frame (3x faster)
+
+        function autoScroll() {
+            var maxScroll = tracklist.scrollHeight - tracklist.clientHeight;
+            var currentScroll = tracklist.scrollTop;
+
+            // Check boundaries before scrolling and reverse if needed
+            if (scrollDirection === 1 && currentScroll >= maxScroll - 1) {
+                scrollDirection = -1;
+            } else if (scrollDirection === -1 && currentScroll <= 1) {
+                scrollDirection = 1;
+            }
+
+            tracklist.scrollTop += scrollDirection * scrollSpeed;
+        }
+
+        spotifyCard.addEventListener('mouseenter', function() {
+            scrollInterval = setInterval(autoScroll, 30);
+        });
+
+        spotifyCard.addEventListener('mouseleave', function() {
+            if (scrollInterval) {
+                clearInterval(scrollInterval);
+                scrollInterval = null;
+            }
+            // Keep current position (don't reset)
+        });
+    }
+
+    // Initialize spotify scroll after page loads
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initSpotifyScroll);
+    } else {
+        initSpotifyScroll();
+    }
 })();

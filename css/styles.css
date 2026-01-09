@@ -448,13 +448,6 @@ body::after {
     align-items: center;
     gap: 0.75rem;
     padding: 0.85rem;
-    text-decoration: none;
-    color: inherit;
-    transition: background-color 0.15s ease;
-}
-
-.spotify-header:hover {
-    background-color: rgba(255, 255, 255, 0.05);
 }
 
 /* Rock hand icon - white by default, green on hover */
@@ -465,7 +458,7 @@ body::after {
     transition: filter 0.3s ease;
 }
 
-.spotify-header:hover .rock-icon {
+.card-spotify:hover .rock-icon {
     filter: brightness(0) saturate(100%) invert(52%) sepia(84%) saturate(431%) hue-rotate(93deg) brightness(97%) contrast(92%);
 }
 
@@ -496,21 +489,14 @@ body::after {
     -webkit-overflow-scrolling: touch;
 }
 
+/* Hide scrollbar but keep scrolling functional */
 .spotify-tracklist::-webkit-scrollbar {
-    width: 6px;
+    display: none;
 }
 
-.spotify-tracklist::-webkit-scrollbar-track {
-    background: var(--bg-secondary);
-}
-
-.spotify-tracklist::-webkit-scrollbar-thumb {
-    background: var(--border-color);
-    border-radius: 3px;
-}
-
-.spotify-tracklist::-webkit-scrollbar-thumb:hover {
-    background: var(--text-secondary);
+.spotify-tracklist {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
 }
 
 .spotify-track {
