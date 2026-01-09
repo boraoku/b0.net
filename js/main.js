@@ -167,7 +167,7 @@
 
     Promise.all(imagesToLoad.map(preloadImage)).then(onAllLoaded);
 
-    // Spotify tracklist auto-scroll on hover
+    // Spotify tracklist auto-scroll on hover (desktop) or when visible (mobile)
     function initSpotifyScroll() {
         var tracklist = document.querySelector('.spotify-tracklist');
         var spotifyCard = document.querySelector('.card-spotify');
@@ -175,7 +175,10 @@
 
         var scrollInterval = null;
         var scrollDirection = 1; // 1 = down, -1 = up
-        var scrollSpeed = 3; // pixels per frame (3x faster)
+        var scrollSpeed = 3; // pixels per frame
+
+        // Detect touch device
+        var isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
 
         function autoScroll() {
             var maxScroll = tracklist.scrollHeight - tracklist.clientHeight;
@@ -191,17 +194,27 @@
             tracklist.scrollTop += scrollDirection * scrollSpeed;
         }
 
-        spotifyCard.addEventListener('mouseenter', function() {
-            scrollInterval = setInterval(autoScroll, 30);
-        });
+        function startScroll() {
+            if (!scrollInterval) {
+                scrollInterval = setInterval(autoScroll, 30);
+            }
+        }
 
-        spotifyCard.addEventListener('mouseleave', function() {
+        function stopScroll() {
             if (scrollInterval) {
                 clearInterval(scrollInterval);
                 scrollInterval = null;
             }
-            // Keep current position (don't reset)
-        });
+        }
+
+        if (isTouchDevice) {
+            // Mobile: Always scroll continuously
+            startScroll();
+        } else {
+            // Desktop: Use hover
+            spotifyCard.addEventListener('mouseenter', startScroll);
+            spotifyCard.addEventListener('mouseleave', stopScroll);
+        }
     }
 
     // Initialize spotify scroll after page loads
