@@ -217,10 +217,49 @@
         }
     }
 
+    function escapeHtml(s) {
+        return String(s).replace(/[&<>"']/g, function(c) {
+            return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c];
+        });
+    }
+
+    function renderEpisode(ep) {
+        return '<div class="spotify-track"><div class="track-info">' +
+               '<span class="track-name">' + escapeHtml(ep.title || '') + '</span>' +
+               '<span class="track-artist">' + escapeHtml(ep.tag || '') + '</span>' +
+               '</div></div>';
+    }
+
+    function loadEpisodes() {
+        var tracklist = document.querySelector('.spotify-tracklist');
+        if (!tracklist) return Promise.resolve();
+
+        var src = tracklist.getAttribute('data-episodes-src');
+        if (!src) return Promise.resolve();
+
+        var url = src + (typeof cacheBuster === 'string' ? cacheBuster : '');
+        return fetch(url)
+            .then(function(r) {
+                if (!r.ok) throw new Error('HTTP ' + r.status);
+                return r.json();
+            })
+            .then(function(data) {
+                var episodes = Array.isArray(data) ? data : (data && data.episodes) || [];
+                tracklist.innerHTML = episodes.map(renderEpisode).join('');
+            })
+            .catch(function(err) {
+                console.error('Failed to load episodes:', err);
+            });
+    }
+
+    function initPodcastSection() {
+        loadEpisodes().then(initSpotifyScroll);
+    }
+
     // Initialize spotify scroll after page loads
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initSpotifyScroll);
+        document.addEventListener('DOMContentLoaded', initPodcastSection);
     } else {
-        initSpotifyScroll();
+        initPodcastSection();
     }
 })();
