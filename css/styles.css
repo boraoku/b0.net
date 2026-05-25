@@ -435,7 +435,26 @@ body::after {
     flex-direction: column;
     align-items: stretch;
     padding: 0;
-    overflow: visible;
+    overflow: hidden;
+}
+
+/* Spotify logo in header - turns green on hover */
+.card-spotify:hover .spotify-logo-icon {
+    color: var(--spotify-green);
+}
+
+/* Podcast cover artwork floating in the bottom-right of the card */
+.podcast-cover-float {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 50%;
+    max-width: 200px;
+    height: auto;
+    pointer-events: none;
+    z-index: 2;
+    object-fit: contain;
+    object-position: right bottom;
 }
 
 .card-spotify:hover {
