@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Варшава 2026 — путеводитель на два дня</title>
+<!--SCREEN_HEAD_START-->
+<link rel="stylesheet" media="screen" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<!--SCREEN_HEAD_END-->
+<style>
+:root{--ink:#23201b;--muted:#6f6657;--soft:#4a4234;--cream:#fbf8f1;--paper:#fff;
+--red:#9d1b30;--red-d:#741322;--gold:#b8860b;--gold-l:#c9a227;--teal:#0f6e6e;--green:#2e7d54;--night:#7a2d8f;--line:#e7dec9;--line2:#d3c7ab;}
+*{box-sizing:border-box;} html{font-size:15px;}
+body{margin:0;color:var(--ink);background:var(--cream);font-family:"Iowan Old Style","Palatino Linotype",Georgia,"Liberation Serif",serif;line-height:1.58;}
+.wrap{max-width:940px;margin:0 auto;padding:0 24px 64px;}
+h1,h2,h3,h4{font-family:"Iowan Old Style","Palatino Linotype",Georgia,"Liberation Serif",serif;font-weight:700;line-height:1.16;}
+em{font-style:italic;} b,strong{font-weight:700;}
+
+.cover{padding-top:30px;}
+.mast{background:linear-gradient(135deg,#5e0f1c 0%,#9d1b30 52%,#c4972a 145%);color:#fdf6e6;border-radius:16px;padding:56px 40px 50px;text-align:center;box-shadow:0 10px 30px rgba(94,15,28,.18);}
+.mast .kicker{letter-spacing:.32em;text-transform:uppercase;font-size:.72rem;font-family:Helvetica,Arial,"Liberation Sans",sans-serif;color:#f3d99c;margin-bottom:18px;}
+.mast h1{font-size:3.6rem;margin:0;color:#fff;letter-spacing:.02em;line-height:1;}
+.mast .sub{font-style:italic;font-size:1.2rem;color:#f6e8cf;margin-top:14px;}
+.mast .rule{width:70px;height:2px;background:#e9c878;margin:22px auto 0;}
+.mast .place{font-family:Helvetica,Arial,"Liberation Sans",sans-serif;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:#efd49a;margin-top:18px;}
+.snap{display:flex;gap:18px;flex-wrap:wrap;margin:26px 0 0;}
+.snap .card{flex:1 1 250px;background:var(--paper);border:1px solid var(--line);border-top:3px solid var(--gold);border-radius:12px;padding:18px 20px;}
+.snap .card.hl{border-top-color:var(--red);}
+.snap .card h4{margin:0 0 5px;font-family:Helvetica,Arial,"Liberation Sans",sans-serif;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:700;}
+.snap .card .big{font-size:1.12rem;font-weight:700;}
+.snap .card .addr{color:var(--muted);font-size:.9rem;margin-top:4px;}
+.intro{color:var(--soft);margin:24px 0 0;font-size:1.04rem;max-width:70ch;}
+.toc{margin:26px 0 0;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px 22px;}
+.toc h4{margin:0 0 12px;font-family:Helvetica,Arial,"Liberation Sans",sans-serif;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);}
+.toc ol{margin:0;padding:0;list-style:none;columns:2;column-gap:34px;}
+.toc li{display:flex;gap:12px;align-items:baseline;padding:5px 0;break-inside:avoid;border-bottom:1px dotted var(--line);}
+.toc .n{font-family:Helvetica,Arial,"Liberation Sans",sans-serif;font-weight:700;color:var(--gold-l);font-size:.82rem;flex:0 0 22px;}
+.toc .t{font-size:.98rem;}
+
+.section{margin-top:46px;}
+.eyebrow{font-family:Helvetica,Arial,"Liberation Sans",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-l);font-weight:700;margin-bottom:6px;}
+.section > h2{font-size:1.8rem;color:var(--red-d);margin:0 0 10px;}
+.section > h2 .bar{display:inline-block;width:30px;height:3px;background:var(--gold);vertical-align:middle;margin-right:12px;border-radius:2px;}
+.lead{color:var(--muted);margin:0 0 20px;max-width:66ch;}
+
+.day{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:0 20px;margin-bottom:18px;break-inside:avoid;}
+.day-h{display:flex;align-items:baseline;gap:12px;border-bottom:2px solid var(--gold);padding:15px 0 11px;}
+.day-h .dnum{font-family:Helvetica,Arial,"Liberation Sans",sans-serif;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-l);font-weight:700;}
+.day-h .ddt{font-size:1.22rem;font-weight:700;color:var(--red-d);}
+.slot{display:flex;gap:16px;padding:13px 0;border-bottom:1px solid var(--line);}
+.slot:last-child{border-bottom:none;}
+.slot .when{flex:0 0 84px;font-family:Helvetica,Arial,"Liberation Sans",sans-serif;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700;padding-top:3px;}
+.slot .sl-body .t{font-weight:700;font-size:1.05rem;}
+.slot .sl-body .d{font-size:.95rem;color:var(--soft);margin-top:2px;}
+.slot.music .t{color:var(--red-d);}
+
+.transit{display:flex;gap:20px;flex-wrap:wrap;}
+.transit .col{flex:1 1 320px;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px 20px;}
+.transit h3{font-size:1.08rem;margin:0 0 9px;}
+.route{font-size:.95rem;color:var(--soft);margin:0 0 7px;}
+.route b{color:var(--teal);}
+
+.mapwrap{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px;}
+#leaflet{height:460px;border-radius:10px;overflow:hidden;border:1px solid var(--line2);}
+#leaflet:fullscreen,#leaflet:-webkit-full-screen{width:100%!important;height:100%!important;border-radius:0;}
+#leaflet.pseudo-fs{position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;z-index:100000;border-radius:0;border:none;margin:0;}
+.fs-btn{display:block;width:30px;height:30px;text-align:center;cursor:pointer;}
+.fs-btn svg{width:16px;height:16px;margin-top:7px;stroke:#333;stroke-width:2;fill:none;}
+.fs-btn:hover svg{stroke:#000;}
+.map-tag{font-family:Helvetica,Arial,"Liberation Sans",sans-serif;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 9px;font-weight:700;}
+.svgmap{margin-top:14px;}
+
+.callout{background:linear-gradient(135deg,#fcefce,#f6e3b6);border:1px solid #e3c781;border-radius:14px;padding:20px 22px;margin:4px 0 22px;}
+.callout .tag{font-family:Helvetica,Arial,"Liberation Sans",sans-serif;font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:#9a7414;font-weight:700;}
+.callout h3{margin:4px 0 7px;color:#8a5e09;font-size:1.26rem;}
+.callout p{margin:0;color:#5a4a25;font-size:.97rem;}
+.music-day{margin-bottom:15px;break-inside:avoid;}
+.music-date{font-size:.96rem;margin:0 0 7px;color:var(--ink);border-bottom:1px solid var(--line2);padding-bottom:5px;font-family:Helvetica,Arial,"Liberation Sans",sans-serif;letter-spacing:.05em;text-transform:uppercase;}
+.ev{display:flex;gap:14px;padding:10px 13px;border:1px solid var(--line);border-left:3px solid var(--red);border-radius:9px;margin-bottom:8px;background:var(--paper);break-inside:avoid;}
+.ev.rec{border-left-color:var(--green);background:#f5faf5;}
+.ev.star{border-left-color:var(--gold);background:linear-gradient(90deg,#fdf3d6,#fff);}
+.ev-time{flex:0 0 64px;font-weight:700;color:var(--red-d);font-size:.95rem;}
+.ev.star .ev-time{color:var(--gold);}
+.ev-title{font-weight:700;font-size:1.04rem;}
+.ev-comp{font-style:italic;font-weight:400;color:var(--muted);font-size:.9rem;}
+.ev-venue{font-size:.86rem;color:var(--teal);font-family:Helvetica,Arial,"Liberation Sans",sans-serif;margin:2px 0 3px;}
+.ev-desc{font-size:.93rem;color:var(--soft);}
+.ev-badge{display:inline-block;font-family:Helvetica,Arial,"Liberation Sans",sans-serif;font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;padding:2px 8px;border-radius:20px;margin-left:6px;vertical-align:middle;}
+.ev-badge.star{background:var(--gold);color:#fff;} .ev-badge.rec{background:var(--green);color:#fff;}
+.venue-strip{margin:18px 0 0;display:flex;flex-wrap:wrap;gap:10px;}
+.vs-item{flex:1 1 calc(50% - 10px);display:flex;gap:11px;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:11px 13px;break-inside:avoid;}
+.vs-num{flex:0 0 26px;height:26px;border-radius:50%;background:var(--red);color:#fff;font-weight:700;font-family:Helvetica,Arial,"Liberation Sans",sans-serif;display:flex;align-items:center;justify-content:center;font-size:.85rem;}
+.vs-name{font-weight:700;} .vs-go{font-family:Helvetica,Arial,"Liberation Sans",sans-serif;font-size:.8rem;color:var(--muted);}
+.vs-desc{font-size:.9rem;color:var(--soft);margin-top:3px;}
+.booking{margin-top:18px;font-size:.9rem;color:var(--muted);}
+
+.nl-group{background:var(--paper);border:1px solid var(--line);border-left:3px solid var(--night);border-radius:12px;padding:16px 18px;margin-bottom:16px;break-inside:avoid;}
+.nl-head{display:flex;gap:13px;align-items:flex-start;}
+.nl-num{flex:0 0 30px;height:30px;border-radius:50%;background:var(--night);color:#fff;font-weight:700;font-family:Helvetica,Arial,"Liberation Sans",sans-serif;display:flex;align-items:center;justify-content:center;font-size:.82rem;}
+.nl-genre{font-family:Helvetica,Arial,"Liberation Sans",sans-serif;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--night);font-weight:700;}
+.nl-venue{font-size:1.16rem;font-weight:700;line-height:1.2;margin-top:1px;}
+.nl-where{font-family:Helvetica,Arial,"Liberation Sans",sans-serif;font-size:.82rem;color:var(--muted);margin-top:2px;}
+.nl-blurb{font-size:.94rem;color:var(--soft);margin:11px 0 12px;}
+.nl-ev{display:flex;gap:13px;padding:6px 0;border-top:1px dotted var(--line2);}
+.nl-ev:first-child{border-top:none;}
+.nl-date{flex:0 0 96px;font-weight:700;color:var(--night);font-size:.87rem;font-family:Helvetica,Arial,"Liberation Sans",sans-serif;}
+.nl-text{font-size:.93rem;color:var(--soft);}
+.note-box{background:#f6f3f8;border:1px solid #e2d4ea;border-radius:12px;padding:15px 19px;margin-top:6px;}
+.note-box h3{margin:0 0 5px;font-size:1.0rem;color:var(--night);}
+.note-box p{margin:0;font-size:.93rem;color:#4a3f52;}
+.note-green{background:#f4f7f4;border-color:#d7e4d7;}
+.note-green h3{color:var(--green);} .note-green p{color:#3f4a3f;}
+
+.places{columns:2;column-gap:20px;}
+.place-card{display:flex;gap:13px;background:var(--paper);border:1px solid var(--line);border-radius:11px;padding:14px 15px;margin:0 0 15px;break-inside:avoid;-webkit-column-break-inside:avoid;}
+.pc-num{flex:0 0 30px;height:30px;border-radius:50%;color:#fff;font-weight:700;font-family:Helvetica,Arial,"Liberation Sans",sans-serif;display:flex;align-items:center;justify-content:center;font-size:.92rem;}
+.pc-name{font-weight:700;font-size:1.06rem;line-height:1.2;}
+.pc-hi{font-size:.92rem;color:var(--soft);margin:5px 0 8px;}
+.pc-meta{display:flex;flex-direction:column;gap:3px;font-family:Helvetica,Arial,"Liberation Sans",sans-serif;font-size:.81rem;color:var(--muted);}
+.pc-note{font-size:.83rem;color:var(--red-d);margin-top:7px;}
+
+.foot{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:20px 22px;}
+.foot ul{margin:0;padding-left:20px;color:var(--muted);font-size:.9rem;}
+.foot li{margin:6px 0;}
+
+@media print{
+  .screen-only{display:none !important;}
+  body{background:#fff;}
+  .wrap{max-width:none;padding:0;}
+  .cover{padding-top:0;}
+  .section{break-before:page;margin-top:0;padding-top:2mm;}
+  .mast,.snap .card,.callout,.ev,.place-card,.mapwrap,.nl-group,.toc,.vs-item,.note-box,.transit .col,.day{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  h2,h3,h4{break-after:avoid;} .lead{break-after:avoid;}
+}
+@page{size:A4;margin:18mm 16mm 16mm;
+  @top-left{content:"Варшава — путеводитель на два дня";font-family:Helvetica,Arial,"Liberation Sans",sans-serif;font-size:7.5pt;letter-spacing:.08em;color:#b0a589;}
+  @top-right{content:"12–13 июня 2026";font-family:Helvetica,Arial,"Liberation Sans",sans-serif;font-size:7.5pt;letter-spacing:.08em;color:#b0a589;}
+  @bottom-right{content:counter(page);font-family:Helvetica,Arial,"Liberation Sans",sans-serif;font-size:8pt;color:#9a8f76;}}
+@page:first{margin:14mm 16mm;@top-left{content:none;}@top-right{content:none;}@bottom-right{content:none;}}
+</style></head>
+<body>
+<div class="wrap">
+
+  <div class="cover">
+    <header class="mast">
+      <div class="kicker">Путеводитель на два дня · подготовлено для вашей поездки</div>
+      <h1>Варшава</h1>
+      <div class="sub">Старый город, музеи и музыка</div>
+      <div class="rule"></div>
+      <div class="place">12–13 июня 2026 · Польша</div>
+    </header>
+
+    <div class="snap">
+      <div class="card"><h4>Ваши два дня</h4><div class="big">Пятница 12 – суббота 13 июня 2026</div>
+        <div class="addr">Оба дня свободны; исторический центр компактный, ровный и пешеходный.</div></div>
+      <div class="card hl"><h4>Музыкальные события</h4><div class="big">Пт: филармония · Сб: премьера оперы</div>
+        <div class="addr">Симфонический концерт, затем премьера «Ромео и Джульетты» Гуно.</div></div>
+    </div>
+
+    <p class="intro">Два неспешных дня в польской столице — оба свободны и легко проходятся пешком. Дни
+    отдайте Старому городу, великим историческим музеям и Королевскому тракту, а вечера — музыке:
+    симфонический концерт в пятницу и, в субботу, премьера новой оперы в Польской национальной опере.
+    Всё в путеводителе нанесено на карту и пронумеровано, а каждый концерт в списке — реальное выступление
+    в эти даты.</p>
+
+    <div class="toc">
+      <h4>В этом путеводителе</h4>
+      <ol>
+        <li><span class="n">01</span><span class="t">План на два дня</span></li>
+        <li><span class="n">02</span><span class="t">Как передвигаться</span></li>
+        <li><span class="n">03</span><span class="t">Карта</span></li>
+        <li><span class="n">04</span><span class="t">Музыка в оба вечера</span></li>
+        <li><span class="n">05</span><span class="t">После заката: джаз и лайв-музыка</span></li>
+        <li><span class="n">06</span><span class="t">Главные музеи</span></li>
+        <li><span class="n">07</span><span class="t">Достопримечательности и Старый город</span></li>
+        <li><span class="n">08</span><span class="t">Перед бронированием</span></li>
+      </ol>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="eyebrow">Раздел 01</div>
+    <h2><span class="bar"></span>План на два дня</h2>
+    <p class="lead">Простая канва на два дня — старый город и большой музей утром, искусство или парк днём,
+    музыка вечером. Свободно переставляйте; ничего здесь не пересекается с закрытиями среди недели.</p>
+    <div class='day'><div class='day-h'><span class='dnum'>День 1</span><span class='ddt'>Пятница, 12 июня</span></div><div class='slot'><div class='when'>Утро</div><div class='sl-body'><div class='t'>Старый город</div><div class='d'>Начните на Замковой площади под колонной Сигизмунда. Осмотрите Королевский замок — королевские апартаменты, зал Каналетто с видами Варшавы XVIII века и два Рембрандта, — затем прогуляйтесь по восстановленной Рыночной площади Старого города со статуей Сирены и к Барбакану чуть севернее.</div></div></div><div class='slot'><div class='when'>Полдень</div><div class='sl-body'><div class='t'>Музей POLIN</div><div class='d'>Чуть севернее — POLIN, многократно отмеченный наградами Музей истории польских евреев; его основная экспозиция — одна из лучших в Европе. Заложите около двух с половиной часов.</div></div></div><div class='slot'><div class='when'>День</div><div class='sl-body'><div class='t'>Королевский тракт</div><div class='d'>Пройдите на юг по Краковскому предместью мимо Университета к костёлу Святого Креста, где в колонне замуровано сердце Шопена. Завершите кофе на Новом Святе.</div></div></div><div class='slot music'><div class='when'>Вечер</div><div class='sl-body'><div class='t'>Национальная филармония</div><div class='d'>Симфонический концерт в 19:30 (подробности в разделе о музыке) — или живой джаз в нескольких минутах ходьбы.</div></div></div></div>
+<div class='day'><div class='day-h'><span class='dnum'>День 2</span><span class='ddt'>Суббота, 13 июня</span></div><div class='slot'><div class='when'>Утро</div><div class='sl-body'><div class='t'>Музей Варшавского восстания</div><div class='d'>Самый пронзительный музей Польши — погружающий, эмоциональный рассказ о восстании 1944 года и военной Варшаве. Заложите два — два с половиной часа.</div></div></div><div class='slot'><div class='when'>День</div><div class='sl-body'><div class='t'>Парк Лазенки</div><div class='d'>Отдохните в Королевских Лазенках: Дворец на острове, регулярные сады, памятник Шопену и свободно гуляющие павлины. Затем пройдитесь по Вислинским бульварам на закате. (Хочется больше искусства? Замените на Национальный музей.)</div></div></div><div class='slot music'><div class='when'>Вечер</div><div class='sl-body'><div class='t'>Польская национальная опера ★</div><div class='d'>Премьера «Ромео и Джульетты» Гуно в Театре Вельки — премьерный вечер, так что стоит нарядиться.</div></div></div></div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow">Раздел 02</div>
+    <h2><span class="bar"></span>Как передвигаться</h2>
+    <p class="lead">Исторический центр Варшавы компактный и ровный, так что большую часть путеводителя можно
+    пройти пешком; трамваи и две линии метро восполняют остальное.</p>
+    <div class="transit">
+      <div class="col">
+        <h3>Пешком и на транспорте</h3>
+        <p class="route">Старый город, Королевский тракт и центр образуют почти непрерывную прогулку
+        ≈30–40&nbsp;мин. До <b>Лазенок</b>, <b>Воли</b> (Музей восстания) или джаз-клубов — на трамвае или метро.</p>
+        <p class="route">Купите билеты <b>ZTM</b> (на 20 минут, 75 минут или 24 часа) в автоматах, киосках или
+        в приложении — они действуют в трамваях, автобусах и метро.</p>
+      </div>
+      <div class="col">
+        <h3>Из аэропорта</h3>
+        <p class="route"><b>Аэропорт Шопена (WAW)</b>: поезд <b>S2/S3</b> или <b>автобус 175</b> довезёт до центра за ≈25&nbsp;мин.</p>
+        <p class="route"><b>Модлин (WMI)</b>, лоукостеры: автобус Modlin Bus или поезд через станцию Modlin, ≈50&nbsp;мин.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow">Раздел 03</div>
+    <h2><span class="bar"></span>Карта</h2>
+    <p class="lead">Каждое место путеводителя, пронумерованное в соответствии с записями — опера и филармония
+    (1–2), музеи (3–6), достопримечательности (7–11) и площадки джаза и лайва (12–15).</p>
+    <div class="mapwrap">
+      <div class="screen-only">
+        <p class="map-tag">Интерактивная спутниковая карта · справа вверху — уличная карта; слева вверху — полный экран</p>
+        <div id="leaflet"></div>
+      </div>
+      <p class="map-tag svgmap">Печатная карта</p>
+      <svg viewBox="0 0 780 820" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Схематическая карта Варшавы с рекомендованными местами" style="width:100%;height:auto;display:block;"><defs><filter id="sh" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.4" flood-color="#000" flood-opacity="0.28"/></filter><clipPath id="plot"><rect x="64" y="86" width="652.0" height="672.0" rx="4"/></clipPath></defs><rect x="0" y="0" width="780" height="820" fill="#eef2f5"/><rect x="8" y="8" width="764" height="804" fill="#f7fafb" stroke="#cfd9de" stroke-width="1.5" rx="6"/><g clip-path="url(#plot)"><rect x="64" y="86" width="652.0" height="672.0" fill="#eaf0ea"/><line x1="150.0" y1="92" x2="150.0" y2="752" stroke="#dde6dd" stroke-width="0.8"/><line x1="230.0" y1="92" x2="230.0" y2="752" stroke="#dde6dd" stroke-width="0.8"/><line x1="310.0" y1="92" x2="310.0" y2="752" stroke="#dde6dd" stroke-width="0.8"/><line x1="390.0" y1="92" x2="390.0" y2="752" stroke="#dde6dd" stroke-width="0.8"/><line x1="470.0" y1="92" x2="470.0" y2="752" stroke="#dde6dd" stroke-width="0.8"/><line x1="550.0" y1="92" x2="550.0" y2="752" stroke="#dde6dd" stroke-width="0.8"/><line x1="630.0" y1="92" x2="630.0" y2="752" stroke="#dde6dd" stroke-width="0.8"/><line x1="70" y1="186.3" x2="710" y2="186.3" stroke="#dde6dd" stroke-width="0.8"/><line x1="70" y1="280.6" x2="710" y2="280.6" stroke="#dde6dd" stroke-width="0.8"/><line x1="70" y1="374.9" x2="710" y2="374.9" stroke="#dde6dd" stroke-width="0.8"/><line x1="70" y1="469.1" x2="710" y2="469.1" stroke="#dde6dd" stroke-width="0.8"/><line x1="70" y1="563.4" x2="710" y2="563.4" stroke="#dde6dd" stroke-width="0.8"/><line x1="70" y1="657.7" x2="710" y2="657.7" stroke="#dde6dd" stroke-width="0.8"/><ellipse cx="533.1" cy="611.4" rx="39.2" ry="107.6" fill="#cfe3c9" opacity="0.85"/><ellipse cx="371.2" cy="299.8" rx="30.1" ry="34.2" fill="#cfe3c9" opacity="0.85"/><ellipse cx="326.0" cy="189.8" rx="24.1" ry="31.8" fill="#cfe3c9" opacity="0.85"/><ellipse cx="280.8" cy="568.7" rx="45.2" ry="73.3" fill="#cfe3c9" opacity="0.85"/><path d="M 551.9 92.0 L 551.9 189.8 L 559.4 263.1 L 589.5 336.4 L 627.2 422.0 L 657.3 519.8 L 679.9 629.8 L 687.4 739.8 " fill="none" stroke="#a9cfe0" stroke-width="26" stroke-linecap="round" stroke-linejoin="round" opacity="0.95"/><text x="650" y="434" font-family="Georgia,serif" font-style="italic" font-size="16" fill="#5f8699" transform="rotate(58 650 434)">Висла</text><text x="435" y="691" font-family="Georgia,serif" font-style="italic" font-size="12" fill="#7da06d">Парк Лазенки</text></g><line x1="375.8" y1="269.2" x2="356.8" y2="278.2" stroke="#8a8170" stroke-width="1" opacity="0.7"/><circle cx="375.8" cy="269.2" r="1.8" fill="#8a8170"/><line x1="381.3" y1="379.1" x2="364.3" y2="390.1" stroke="#8a8170" stroke-width="1" opacity="0.7"/><circle cx="381.3" cy="379.1" r="1.8" fill="#8a8170"/><line x1="402.3" y1="217.4" x2="419.3" y2="211.4" stroke="#8a8170" stroke-width="1" opacity="0.7"/><circle cx="402.3" cy="217.4" r="1.8" fill="#8a8170"/><line x1="478.1" y1="408.3" x2="495.1" y2="413.3" stroke="#8a8170" stroke-width="1" opacity="0.7"/><circle cx="478.1" cy="408.3" r="1.8" fill="#8a8170"/><line x1="385.5" y1="193.4" x2="383.5" y2="173.4" stroke="#8a8170" stroke-width="1" opacity="0.7"/><circle cx="385.5" cy="193.4" r="1.8" fill="#8a8170"/><line x1="425.2" y1="326.9" x2="444.2" y2="329.9" stroke="#8a8170" stroke-width="1" opacity="0.7"/><circle cx="425.2" cy="326.9" r="1.8" fill="#8a8170"/><line x1="341.0" y1="411.8" x2="322.0" y2="418.8" stroke="#8a8170" stroke-width="1" opacity="0.7"/><circle cx="341.0" cy="411.8" r="1.8" fill="#8a8170"/><line x1="486.4" y1="254.6" x2="501.4" y2="250.6" stroke="#8a8170" stroke-width="1" opacity="0.7"/><circle cx="486.4" cy="254.6" r="1.8" fill="#8a8170"/><line x1="396.2" y1="348.6" x2="411.2" y2="336.6" stroke="#8a8170" stroke-width="1" opacity="0.7"/><circle cx="396.2" cy="348.6" r="1.8" fill="#8a8170"/><circle cx="356.8" cy="278.2" r="12.5" fill="#9d1b30" stroke="#ffffff" stroke-width="2.2" filter="url(#sh)"/><text x="356.8" y="278.7" font-family="Helvetica,Arial,sans-serif" font-weight="700" font-size="12" fill="#fff" text-anchor="middle" dominant-baseline="central">1</text><circle cx="364.3" cy="390.1" r="12.5" fill="#9d1b30" stroke="#ffffff" stroke-width="2.2" filter="url(#sh)"/><text x="364.3" y="390.6" font-family="Helvetica,Arial,sans-serif" font-weight="700" font-size="12" fill="#fff" text-anchor="middle" dominant-baseline="central">2</text><circle cx="246.8" cy="195.9" r="12.5" fill="#34507e" stroke="#ffffff" stroke-width="2.2" filter="url(#sh)"/><text x="246.8" y="196.4" font-family="Helvetica,Arial,sans-serif" font-weight="700" font-size="12" fill="#fff" text-anchor="middle" dominant-baseline="central">3</text><circle cx="153.0" cy="405.0" r="12.5" fill="#34507e" stroke="#ffffff" stroke-width="2.2" filter="url(#sh)"/><text x="153.0" y="405.5" font-family="Helvetica,Arial,sans-serif" font-weight="700" font-size="12" fill="#fff" text-anchor="middle" dominant-baseline="central">4</text><circle cx="419.3" cy="211.4" r="12.5" fill="#34507e" stroke="#ffffff" stroke-width="2.2" filter="url(#sh)"/><text x="419.3" y="211.9" font-family="Helvetica,Arial,sans-serif" font-weight="700" font-size="12" fill="#fff" text-anchor="middle" dominant-baseline="central">5</text><circle cx="495.1" cy="413.3" r="12.5" fill="#34507e" stroke="#ffffff" stroke-width="2.2" filter="url(#sh)"/><text x="495.1" y="413.8" font-family="Helvetica,Arial,sans-serif" font-weight="700" font-size="12" fill="#fff" text-anchor="middle" dominant-baseline="central">6</text><circle cx="383.5" cy="173.4" r="12.5" fill="#2e7d54" stroke="#ffffff" stroke-width="2.2" filter="url(#sh)"/><text x="383.5" y="173.9" font-family="Helvetica,Arial,sans-serif" font-weight="700" font-size="12" fill="#fff" text-anchor="middle" dominant-baseline="central">7</text><circle cx="444.2" cy="329.9" r="12.5" fill="#2e7d54" stroke="#ffffff" stroke-width="2.2" filter="url(#sh)"/><text x="444.2" y="330.4" font-family="Helvetica,Arial,sans-serif" font-weight="700" font-size="12" fill="#fff" text-anchor="middle" dominant-baseline="central">8</text><circle cx="322.0" cy="418.8" r="12.5" fill="#2e7d54" stroke="#ffffff" stroke-width="2.2" filter="url(#sh)"/><text x="322.0" y="419.3" font-family="Helvetica,Arial,sans-serif" font-weight="700" font-size="12" fill="#fff" text-anchor="middle" dominant-baseline="central">9</text><circle cx="543.6" cy="621.5" r="12.5" fill="#2e7d54" stroke="#ffffff" stroke-width="2.2" filter="url(#sh)"/><text x="543.6" y="622.0" font-family="Helvetica,Arial,sans-serif" font-weight="700" font-size="12" fill="#fff" text-anchor="middle" dominant-baseline="central">10</text><circle cx="501.4" cy="250.6" r="12.5" fill="#2e7d54" stroke="#ffffff" stroke-width="2.2" filter="url(#sh)"/><text x="501.4" y="251.1" font-family="Helvetica,Arial,sans-serif" font-weight="700" font-size="12" fill="#fff" text-anchor="middle" dominant-baseline="central">11</text><circle cx="411.2" cy="336.6" r="12.5" fill="#7a2d8f" stroke="#ffffff" stroke-width="2.2" filter="url(#sh)"/><text x="411.2" y="337.1" font-family="Helvetica,Arial,sans-serif" font-weight="700" font-size="12" fill="#fff" text-anchor="middle" dominant-baseline="central">12</text><circle cx="351.4" cy="519.5" r="12.5" fill="#7a2d8f" stroke="#ffffff" stroke-width="2.2" filter="url(#sh)"/><text x="351.4" y="520.0" font-family="Helvetica,Arial,sans-serif" font-weight="700" font-size="12" fill="#fff" text-anchor="middle" dominant-baseline="central">13</text><circle cx="395.7" cy="585.0" r="12.5" fill="#7a2d8f" stroke="#ffffff" stroke-width="2.2" filter="url(#sh)"/><text x="395.7" y="585.5" font-family="Helvetica,Arial,sans-serif" font-weight="700" font-size="12" fill="#fff" text-anchor="middle" dominant-baseline="central">14</text><circle cx="372.8" cy="659.3" r="12.5" fill="#7a2d8f" stroke="#ffffff" stroke-width="2.2" filter="url(#sh)"/><text x="372.8" y="659.8" font-family="Helvetica,Arial,sans-serif" font-weight="700" font-size="12" fill="#fff" text-anchor="middle" dominant-baseline="central">15</text><g><rect x="24" y="102" width="240" height="140" rx="8" fill="#ffffff" stroke="#cfd9de" stroke-width="1.2" opacity="0.97" filter="url(#sh)"/><text x="38" y="128" font-family="Georgia,serif" font-size="15" font-weight="700" fill="#1c1c1e">Легенда</text><circle cx="46" cy="148" r="8" fill="#9d1b30" stroke="#fff" stroke-width="1.6"/><text x="64" y="152" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#333">Опера и классика (1–2)</text><circle cx="46" cy="172" r="8" fill="#34507e" stroke="#fff" stroke-width="1.6"/><text x="64" y="176" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#333">Музеи (3–6)</text><circle cx="46" cy="196" r="8" fill="#2e7d54" stroke="#fff" stroke-width="1.6"/><text x="64" y="200" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#333">Достопримечательности (7–11)</text><circle cx="46" cy="220" r="8" fill="#7a2d8f" stroke="#fff" stroke-width="1.6"/><text x="64" y="224" font-family="Helvetica,Arial,sans-serif" font-size="12.5" fill="#333">Джаз и лайв-музыка (12–15)</text></g><g transform="translate(740,150)"><polygon points="0,-22 7,6 0,-1 -7,6" fill="#1c1c1e"/><text x="0" y="-28" font-family="Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#1c1c1e" text-anchor="middle">С</text></g><g><line x1="40.0" y1="772" x2="260.2" y2="772" stroke="#1c1c1e" stroke-width="2.4"/><line x1="40.0" y1="767" x2="40.0" y2="777" stroke="#1c1c1e" stroke-width="2.4"/><line x1="150.1" y1="767" x2="150.1" y2="777" stroke="#1c1c1e" stroke-width="2.4"/><line x1="260.2" y1="767" x2="260.2" y2="777" stroke="#1c1c1e" stroke-width="2.4"/><text x="40.0" y="790" font-family="Helvetica,Arial,sans-serif" font-size="11.5" fill="#1c1c1e" text-anchor="middle">0</text><text x="260.2" y="790" font-family="Helvetica,Arial,sans-serif" font-size="11.5" fill="#1c1c1e" text-anchor="middle">2 км</text></g><text x="758" y="802" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#9a8f76" text-anchor="end">Схематическая карта · положение приблизительно</text></svg>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow">Раздел 04</div>
+    <h2><span class="bar"></span>Музыка в оба вечера</h2>
+    <p class="lead">Ваш визит выпал на удачные выходные: симфонический концерт в пятницу и настоящая оперная
+    премьера в субботу.</p>
+    <div class="callout">
+      <div class="tag">★ Главное событие</div>
+      <h3>Суббота, 13 июня — премьера в Польской национальной опере</h3>
+      <p>Театр Вельки представляет совершенно новую постановку «Ромео и Джульетты» Гуно в премьерный вечер —
+      на французском с польскими и английскими субтитрами, на одной из крупнейших оперных сцен Европы.
+      Билеты на премьеру расходятся быстро, поэтому бронируйте заранее и уточните время начала.</p>
+    </div>
+    <div class='music-day'><h3 class='music-date'>Пт 12 июня</h3><div class='ev rec'><div class='ev-time'>19:30</div><div class='ev-main'><div class='ev-title'>Симфонический концерт выпускников <span class='ev-comp'>Музыкальный университет Шопена</span><span class='ev-badge rec'>Рекомендуем</span></div><div class='ev-venue'>Национальная филармония, Концертный зал</div><div class='ev-desc'>Оркестр Национальной филармонии под управлением Якуба Гжибовского и Никодема Свидера, виолончелист Антони Врона и сопрано Ариадна Лядди: «Классическая» симфония Прокофьева, Вариации на тему рококо Чайковского и ария с жемчугом Гуно.</div></div></div></div>
+<div class='music-day'><h3 class='music-date'>Сб 13 июня</h3><div class='ev star'><div class='ev-time'>≈19:00</div><div class='ev-main'><div class='ev-title'>«Ромео и Джульетта» — премьера ★ <span class='ev-comp'>Шарль Гуно</span><span class='ev-badge star'>Премьера</span></div><div class='ev-venue'>Театр Вельки — Польская национальная опера</div><div class='ev-desc'>Совершенно новая постановка лирической трагедии Гуно в премьерный вечер; на французском с польскими и английскими субтитрами.</div></div></div><div class='ev music'><div class='ev-time'>—</div><div class='ev-main'><div class='ev-title'>Балет «Urojenia» <span class='ev-comp'>Изадора Вайс</span></div><div class='ev-venue'>Театр Вельки</div><div class='ev-desc'>Новый балет (премьера 11 июня) на музыку Бетховена, Шимановского и Вивальди — возможно, идёт и в ваши даты; уточните по афише.</div></div></div></div>
+    <div class="venue-strip"><div class='vs-item'><span class='vs-num'>1</span><div><span class='vs-name'>Театр Вельки — Польская национальная опера</span> <span class='vs-go'>plac Teatralny 1 · у Старого города</span><div class='vs-desc'>Одна из крупнейших оперных сцен Европы; дом Польской национальной оперы и балета.</div></div></div>
+<div class='vs-item'><span class='vs-num'>2</span><div><span class='vs-name'>Национальная филармония</span> <span class='vs-go'>ul. Jasna 5 · центр города</span><div class='vs-desc'>Первая филармония Польши и место проведения Конкурса Шопена; два зала, концерты почти каждый вечер.</div></div></div></div>
+    <p class="booking">Билеты: опера — <b>teatrwielki.pl</b>; филармония — <b>filharmonia.pl</b>. Премьеры и
+    концерты по выходным распродаются рано, бронируйте заранее; дресс-код — smart-casual.</p>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow">Раздел 05</div>
+    <h2><span class="bar"></span>После заката: джаз и лайв-музыка</h2>
+    <p class="lead">В Варшаве одна из богатейших джазовых сцен Центральной Европы и живая музыка почти каждый
+    вечер. Несколько надёжных вариантов на ваши два вечера.</p>
+    <div class='nl-group'><div class='nl-head'><span class='nl-num'>13</span><div><div class='nl-genre'>Джаз</div><div class='nl-venue'>Jassmine</div><div class='nl-where'>Wilcza 73, под отелем Nobu · центр</div></div></div><p class='nl-blurb'>Сейчас самый обсуждаемый джаз-клуб Варшавы — камерный, со вкусом оформленный зал с отличной акустикой, серьёзной международной программой и прекрасными коктейлями. Столики не бронируются, приходите пораньше.</p><div class='nl-events'><div class='nl-ev'><span class='nl-date'>Пт и сб</span><span class='nl-text'>Живые сеты каждый вечер — смотрите афишу</span></div></div></div>
+<div class='nl-group'><div class='nl-head'><span class='nl-num'>14</span><div><div class='nl-genre'>Авангардный джаз</div><div class='nl-venue'>Pardon, To Tu</div><div class='nl-where'>Aleja Armii Ludowej 14 · центр-юг</div></div></div><p class='nl-blurb'>Варшавская институция импровизационного и авангардного джаза — а ещё бар и книжный магазин с преданной публикой. Ожидайте смелую сторону жанра.</p><div class='nl-events'><div class='nl-ev'><span class='nl-date'>Пт и сб</span><span class='nl-text'>Концерты почти каждый вечер; см. программу</span></div></div></div>
+<div class='nl-group'><div class='nl-head'><span class='nl-num'>12</span><div><div class='nl-genre'>Джаз и поздние вечера</div><div class='nl-venue'>Tygmont</div><div class='nl-where'>Mazowiecka 6/8 · в двух шагах от Старого города</div></div></div><p class='nl-blurb'>Давно работающий клуб у Королевского тракта: живая музыка раньше вечером и клубная атмосфера ночью — удобно для джаза в шаговой доступности от центра.</p><div class='nl-events'><div class='nl-ev'><span class='nl-date'>Пт и сб</span><span class='nl-text'>Живая музыка, затем диджеи до утра</span></div></div></div>
+<div class='nl-group'><div class='nl-head'><span class='nl-num'>15</span><div><div class='nl-genre'>Рок и большие концерты</div><div class='nl-venue'>Klub Stodoła</div><div class='nl-where'>ul. Batorego 10 · у Поля Мокотовского</div></div></div><p class='nl-blurb'>Одна из самых легендарных концертных площадок Варшавы родом из студенческой сцены 1950-х, сегодня — постоянная точка гастролей рок- и инди-групп.</p><div class='nl-events'><div class='nl-ev'><span class='nl-date'>Пт и сб</span><span class='nl-text'>Что гастролирует — смотрите афишу</span></div></div></div>
+    <div class="note-box">
+      <h3>Где ночь выходит на улицу</h3>
+      <p>Если хочется не концерта, а бокала: дворик <b>Pawilony</b> у Нового Свята — лабиринт крошечных баров,
+      а за рекой район <b>Прага</b> (вокруг Зомбковской и дворика бывшего водочного завода Koneser) — самая
+      колоритная ночная жизнь города.</p>
+    </div>
+    <p class="booking">Билеты и афиши: <b>jassmine.pl</b>, <b>pardontotu.pl</b>, <b>tygmont.com.pl</b> и
+    <b>stodola.pl</b>. Программа на год вперёд может измениться — уточняйте перед визитом.</p>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow">Раздел 06</div>
+    <h2><span class="bar"></span>Главные музеи</h2>
+    <p class="lead">Пронумерованы 3–6 в соответствии с картой — четыре коллекции, наиболее достойные ваших двух
+    дней, открыты в пятницу и субботу.</p>
+    <div class="places">
+    <div class='place-card'><div class='pc-num' style='background:#34507e'>3</div><div class='pc-body'><div class='pc-name'>Музей истории польских евреев POLIN</div><div class='pc-hi'>Тысяча лет польско-еврейской истории в одной из самых признанных экспозиций Европы, в эффектном здании финских архитекторов рядом с памятником Героям гетто.</div><div class='pc-meta'><span class='pc-hours'>&#128336; Пт 10:00–18:00 · сб 10:00–20:00 (вт закрыт)</span><span class='pc-go'>&#128694; Трамвай / короткая прогулка севернее Старого города</span></div><div class='pc-note'>По четвергам бесплатно (не ваши даты); аудиогид очень рекомендуется.</div></div></div>
+<div class='place-card'><div class='pc-num' style='background:#34507e'>4</div><div class='pc-body'><div class='pc-name'>Музей Варшавского восстания</div><div class='pc-hi'>Погружающий, глубоко трогающий рассказ о 63 днях восстания 1944 года и военной Варшаве — звук, кино и воссозданные улицы.</div><div class='pc-meta'><span class='pc-hours'>&#128336; Ср–пт 08:00–18:00 · сб 10:00–18:00 (вт закрыт)</span><span class='pc-go'>&#128694; Трамвай на запад, район Воля</span></div><div class='pc-note'>Заложите 2–2,5 ч; может быть тяжело эмоционально.</div></div></div>
+<div class='place-card'><div class='pc-num' style='background:#34507e'>5</div><div class='pc-body'><div class='pc-name'>Королевский замок</div><div class='pc-hi'>Восстановленная резиденция польских королей: королевские апартаменты, зал Каналетто с видами города XVIII века и два Рембрандта.</div><div class='pc-meta'><span class='pc-hours'>&#128336; Вт–вс 10:00–18:00 (пн закрыт)</span><span class='pc-go'>&#128694; Замковая площадь, Старый город</span></div><div class='pc-note'>По средам бесплатно (не ваши даты).</div></div></div>
+<div class='place-card'><div class='pc-num' style='background:#34507e'>6</div><div class='pc-body'><div class='pc-name'>Национальный музей</div><div class='pc-hi'>Польские мастера от Матейко до Виткация, средневековые алтари и замечательная Галерея Фарас с нубийскими фресками.</div><div class='pc-meta'><span class='pc-hours'>&#128336; Вт–вс, пт до 20:00 (пн закрыт)</span><span class='pc-go'>&#128694; Aleje Jerozolimskie · центр</span></div><div class='pc-note'>Хороший вариант рядом с Королевским трактом.</div></div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow">Раздел 07</div>
+    <h2><span class="bar"></span>Достопримечательности и Старый город</h2>
+    <p class="lead">Пронумерованы 7–11 в соответствии с картой — восстановленный старый город, Королевский
+    тракт и большие зелёные пространства города.</p>
+    <div class="places">
+    <div class='place-card'><div class='pc-num' style='background:#2e7d54'>7</div><div class='pc-body'><div class='pc-name'>Рыночная площадь Старого города</div><div class='pc-hi'>Сердце Варшавы под охраной ЮНЕСКО — кропотливо восстановленное после войны, обрамлённое разноцветными домами, со статуей Сирены в центре и Барбаканом чуть севернее.</div><div class='pc-meta'><span class='pc-hours'>&#128336; Открыто всегда</span><span class='pc-go'>&#128694; ≈10 мин пешком от Театра Вельки</span></div><div class='pc-note'>Красивее всего ранним утром или после заката.</div></div></div>
+<div class='place-card'><div class='pc-num' style='background:#2e7d54'>8</div><div class='pc-body'><div class='pc-name'>Королевский тракт и костёл Святого Креста</div><div class='pc-hi'>Парадная аллея Краковского предместья с дворцами, костёлами и Университетом; в костёле Святого Креста в колонне хранится сердце Шопена.</div><div class='pc-meta'><span class='pc-hours'>&#128336; Костёл ~10:00–18:00 (сб до ~19:00)</span><span class='pc-go'>&#128694; Идёт на юг от Старого города</span></div><div class='pc-note'>Вход в костёл бесплатный.</div></div></div>
+<div class='place-card'><div class='pc-num' style='background:#2e7d54'>9</div><div class='pc-body'><div class='pc-name'>Дворец культуры и науки</div><div class='pc-hi'>Спорный «подарок» Сталина 1955 года и пока самая высокая доминанта города; поднимитесь на террасу 30-го этажа за лучшей панорамой Варшавы.</div><div class='pc-meta'><span class='pc-hours'>&#128336; Терраса ежедневно 10:00–20:00</span><span class='pc-go'>&#128694; Центр города, у Главного вокзала</span></div><div class='pc-note'>Поднимайтесь ближе к закату.</div></div></div>
+<div class='place-card'><div class='pc-num' style='background:#2e7d54'>10</div><div class='pc-body'><div class='pc-name'>Парк Лазенки (Королевские Лазенки)</div><div class='pc-hi'>Красивейший парк Варшавы — неоклассический Дворец на острове, регулярные сады, памятник Шопену под открытым небом и павлины под ногами.</div><div class='pc-meta'><span class='pc-hours'>&#128336; Парк ежедневно 06:00–22:00</span><span class='pc-go'>&#128694; Автобус/трамвай на юг по Уяздовским аллеям</span></div><div class='pc-note'>Бесплатно; летом по воскресеньям концерты Шопена (не ваши даты).</div></div></div>
+<div class='place-card'><div class='pc-num' style='background:#2e7d54'>11</div><div class='pc-body'><div class='pc-name'>Вислинские бульвары</div><div class='pc-hi'>Обновлённая набережная с кафе, плавучими барами и широкими велодорожками — любимое место города тёплыми вечерами, с видами на другой берег.</div><div class='pc-meta'><span class='pc-hours'>&#128336; Открыто всегда</span><span class='pc-go'>&#128694; Под Старым городом, западный берег</span></div><div class='pc-note'>Лучше всего на закате; пить на улице здесь разрешено.</div></div></div>
+    </div>
+    <div class="note-box note-green">
+      <h3>Если есть свободные полдня</h3>
+      <p><b>Дворец в Вилянуве</b> — пышный барочный «польский Версаль» примерно в 6&nbsp;км к югу, с садами и
+      оранжереей — отличная вылазка на автобусе или трамвае из центра.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow">Перед поездкой</div>
+    <h2><span class="bar"></span>Перед бронированием</h2>
+    <div class="foot">
+      <ul>
+        <li>Путеводитель составлен на <b>пятницу 12 – субботу 13 июня 2026</b>, ваши даты. Все позиции
+        соответствуют этим двум дням.</li>
+        <li><b>Премьера оперы</b> в субботу будет крайне востребована — бронируйте Театр Вельки заранее и
+        уточните точное время начала. Программы и цены за год вперёд могут измениться; проверяйте на сайтах площадок.</li>
+        <li><b>Музей Фридерика Шопена</b> закрыт на реконструкцию (открытие ожидается в 2027 году), поэтому к
+        Шопену этот путеводитель ведёт через костёл Святого Креста (его сердце) и памятник в Лазенках.</li>
+        <li>Дни бесплатного входа (POLIN по четвергам; Королевский замок и Национальный музей по средам) не
+        выпадают на ваши даты, так что закладывайте обычные билеты.</li>
+        <li>Источники: Театр Вельки — Польская национальная опера; Национальная филармония; афиши площадок;
+        город Варшава. Местоположения и координаты — Google Places; спутниковые снимки — Esri.</li>
+      </ul>
+    </div>
+  </section>
+
+</div>
+<!--SCREEN_JS_START--><script>
+(function(){
+  var P=[{"lab": "1", "name": "Театр Вельки — Польская национальная опера", "lat": 52.2435048, "lon": 21.0106156, "cat": "music"}, {"lab": "2", "name": "Национальная филармония", "lat": 52.2345063, "lon": 21.0113428, "cat": "music"}, {"lab": "3", "name": "Музей истории польских евреев POLIN", "lat": 52.2494958, "lon": 20.993481, "cat": "museum"}, {"lab": "4", "name": "Музей Варшавского восстания", "lat": 52.2323936, "lon": 20.9810185, "cat": "museum"}, {"lab": "5", "name": "Королевский замок", "lat": 52.2477436, "lon": 21.0141275, "cat": "museum"}, {"lab": "6", "name": "Национальный музей", "lat": 52.2321171, "lon": 21.0242024, "cat": "museum"}, {"lab": "7", "name": "Рыночная площадь Старого города", "lat": 52.2497, "lon": 21.0119, "cat": "landmark"}, {"lab": "8", "name": "Королевский тракт и костёл Святого Креста", "lat": 52.2387804, "lon": 21.0171742, "cat": "landmark"}, {"lab": "9", "name": "Дворец культуры и науки", "lat": 52.231838, "lon": 21.005995, "cat": "landmark"}, {"lab": "10", "name": "Парк Лазенки (Королевские Лазенки)", "lat": 52.2146733, "lon": 21.0328941, "cat": "landmark"}, {"lab": "11", "name": "Вислинские бульвары", "lat": 52.2446933, "lon": 21.0252986, "cat": "landmark"}, {"lab": "12", "name": "Tygmont (джаз / лайв)", "lat": 52.2370018, "lon": 21.0133277, "cat": "night"}, {"lab": "13", "name": "Jassmine (джаз-клуб)", "lat": 52.2230235, "lon": 21.0073725, "cat": "night"}, {"lab": "14", "name": "Pardon, To Tu (джаз)", "lat": 52.2176629, "lon": 21.0132625, "cat": "night"}, {"lab": "15", "name": "Klub Stodoła (лайв-музыка)", "lat": 52.211588, "lon": 21.010216, "cat": "night"}], C={"music": "#9d1b30", "museum": "#34507e", "landmark": "#2e7d54", "night": "#7a2d8f"};
+  if(typeof L==='undefined'){return;}
+  var map=L.map('leaflet',{scrollWheelZoom:false});
+  var esriAttr='Imagery &copy; Esri, Maxar, Earthstar Geographics';
+  var sat=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,attribution:esriAttr}).addTo(map);
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,opacity:0.9,pane:'overlayPane'}).addTo(map);
+  var street=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap'});
+  L.control.layers({'Спутник':sat,'Уличная карта':street},null,{position:'topright'}).addTo(map);
+  var FullCtl=L.Control.extend({options:{position:'topleft'},onAdd:function(map){
+    var bar=L.DomUtil.create('div','leaflet-bar leaflet-control');
+    var btn=L.DomUtil.create('a','fs-btn',bar);
+    btn.href='#';btn.setAttribute('role','button');btn.setAttribute('aria-label','На весь экран');
+    var EX='<svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>';
+    var CO='<svg viewBox="0 0 24 24"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg>';
+    btn.innerHTML=EX;btn.title='Открыть карту на весь экран';var el=map.getContainer();
+    function isFs(){return document.fullscreenElement===el||document.webkitFullscreenElement===el||el.classList.contains('pseudo-fs');}
+    function rf(){var on=isFs();btn.innerHTML=on?CO:EX;btn.title=on?'Выйти из полноэкранного режима':'Открыть карту на весь экран';setTimeout(function(){map.invalidateSize();},120);}
+    function pOn(){el.classList.add('pseudo-fs');rf();} function pOff(){el.classList.remove('pseudo-fs');rf();}
+    function en(){var r=el.requestFullscreen||el.webkitRequestFullscreen;if(r){try{var p=r.call(el);if(p&&p.catch){p.catch(pOn);}return;}catch(e){}}pOn();}
+    function ex(){if(el.classList.contains('pseudo-fs')){pOff();return;}var x=document.exitFullscreen||document.webkitExitFullscreen;if(x){try{x.call(document);}catch(e){}}}
+    L.DomEvent.on(btn,'click',function(e){L.DomEvent.stop(e);if(isFs()){ex();}else{en();}});
+    L.DomEvent.disableClickPropagation(bar);
+    document.addEventListener('fullscreenchange',rf);document.addEventListener('webkitfullscreenchange',rf);
+    document.addEventListener('keydown',function(ev){if(ev.key==='Escape'&&el.classList.contains('pseudo-fs')){pOff();}});
+    return bar;}});
+  map.addControl(new FullCtl());
+  var b=[];
+  P.forEach(function(p){
+    var c=C[p.cat]||'#666';
+    var ic=L.divIcon({className:'',html:'<div style="background:'+c+';color:#fff;width:26px;height:26px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;font:700 12px Helvetica,Arial;">'+p.lab+'</div>',iconSize:[26,26],iconAnchor:[13,13]});
+    L.marker([p.lat,p.lon],{icon:ic}).addTo(map).bindPopup('<b>'+p.lab+'.</b> '+p.name);
+    b.push([p.lat,p.lon]);
+  });
+  map.fitBounds(b,{padding:[30,30]});
+})();
+</script><!--SCREEN_JS_END-->
+</body></html>
