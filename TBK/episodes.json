@@ -1,69 +1,274 @@
 [
-  {"title": "July 1, 2026", "tag": "Daily Brief"},
-  {"title": "June 30, 2026", "tag": "Daily Brief"},
-  {"title": "June 29, 2026", "tag": "Daily Brief"},
-  {"title": "June 28, 2026", "tag": "Daily Brief"},
-  {"title": "June 27, 2026", "tag": "Daily Brief"},
-  {"title": "June 26, 2026", "tag": "Daily Brief"},
-  {"title": "June 25, 2026", "tag": "Daily Brief"},
-  {"title": "June 24, 2026", "tag": "Daily Brief"},
-  {"title": "June 23, 2026", "tag": "Daily Brief"},
-  {"title": "June 22, 2026", "tag": "Daily Brief"},
-  {"title": "June 21, 2026", "tag": "Daily Brief"},
-  {"title": "June 20, 2026", "tag": "Daily Brief"},
-  {"title": "June 19, 2026", "tag": "Daily Brief"},
-  {"title": "June 18, 2026", "tag": "Daily Brief"},
-  {"title": "June 17, 2026", "tag": "Daily Brief"},
-  {"title": "June 16, 2026", "tag": "Daily Brief"},
-  {"title": "June 15, 2026", "tag": "Daily Brief"},
-  {"title": "June 14, 2026", "tag": "Daily Brief"},
-  {"title": "June 13, 2026", "tag": "Daily Brief"},
-  {"title": "June 12, 2026", "tag": "Daily Brief"},
-  {"title": "June 11, 2026", "tag": "Daily Brief"},
-  {"title": "June 10, 2026", "tag": "Daily Brief"},
-  {"title": "June 9, 2026", "tag": "Daily Brief"},
-  {"title": "June 8, 2026", "tag": "Daily Brief"},
-  {"title": "June 7, 2026", "tag": "Daily Brief"},
-  {"title": "June 6, 2026", "tag": "Daily Brief"},
-  {"title": "June 5, 2026", "tag": "Daily Brief"},
-  {"title": "June 4, 2026", "tag": "Daily Brief"},
-  {"title": "June 3, 2026", "tag": "Daily Brief"},
-  {"title": "June 2, 2026", "tag": "Daily Brief"},
-  {"title": "June 1, 2026", "tag": "Daily Brief"},
-  {"title": "May 31, 2026", "tag": "Daily Brief"},
-  {"title": "May 30, 2026", "tag": "Daily Brief"},
-  {"title": "May 29, 2026", "tag": "Daily Brief"},
-  {"title": "May 28, 2026", "tag": "Daily Brief"},
-  {"title": "May 27, 2026", "tag": "Daily Brief"},
-  {"title": "May 26, 2026", "tag": "Daily Brief"},
-  {"title": "May 25, 2026", "tag": "Daily Brief"},
-  {"title": "May 24, 2026", "tag": "Daily Brief"},
-  {"title": "May 23, 2026", "tag": "Daily Brief"},
-  {"title": "May 22, 2026", "tag": "Daily Brief"},
-  {"title": "May 21, 2026", "tag": "Daily Brief"},
-  {"title": "May 20, 2026", "tag": "Daily Brief"},
-  {"title": "May 19, 2026", "tag": "Daily Brief"},
-  {"title": "May 18, 2026", "tag": "Daily Brief"},
-  {"title": "May 17, 2026", "tag": "Daily Brief"},
-  {"title": "May 16, 2026", "tag": "Daily Brief"},
-  {"title": "May 15, 2026", "tag": "Daily Brief"},
-  {"title": "May 14, 2026", "tag": "Daily Brief"},
-  {"title": "May 13, 2026", "tag": "Daily Brief"},
-  {"title": "May 12, 2026", "tag": "Daily Brief"},
-  {"title": "May 11, 2026", "tag": "Daily Brief"},
-  {"title": "May 10, 2026", "tag": "Daily Brief"},
-  {"title": "May 9, 2026", "tag": "Daily Brief"},
-  {"title": "May 8, 2026", "tag": "Daily Brief"},
-  {"title": "May 7, 2026", "tag": "Daily Brief"},
-  {"title": "May 6, 2026", "tag": "Daily Brief"},
-  {"title": "May 5, 2026", "tag": "Daily Brief"},
-  {"title": "May 4, 2026", "tag": "Daily Brief"},
-  {"title": "May 3, 2026", "tag": "Daily Brief"},
-  {"title": "May 2, 2026", "tag": "Daily Brief"},
-  {"title": "May 1, 2026", "tag": "Daily Brief"},
-  {"title": "April 30, 2026", "tag": "Daily Brief"},
-  {"title": "April 29, 2026", "tag": "Daily Brief"},
-  {"title": "April 28, 2026", "tag": "Daily Brief"},
-  {"title": "April 27, 2026", "tag": "Daily Brief"},
-  {"title": "April 26, 2026", "tag": "Daily Brief"}
+  {
+    "title": "July 2, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "July 1, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "June 30, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "June 29, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "June 28, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "June 27, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "June 26, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "June 25, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "June 24, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "June 23, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "June 22, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "June 21, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "June 20, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "June 19, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "June 18, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "June 17, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "June 16, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "June 15, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "June 14, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "June 13, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "June 12, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "June 11, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "June 10, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "June 9, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "June 8, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "June 7, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "June 6, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "June 5, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "June 4, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "June 3, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "June 2, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "June 1, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "May 31, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "May 30, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "May 29, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "May 28, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "May 27, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "May 26, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "May 25, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "May 24, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "May 23, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "May 22, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "May 21, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "May 20, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "May 19, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "May 18, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "May 17, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "May 16, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "May 15, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "May 14, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "May 13, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "May 12, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "May 11, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "May 10, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "May 9, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "May 8, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "May 7, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "May 6, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "May 5, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "May 4, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "May 3, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "May 2, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "May 1, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "April 30, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "April 29, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "April 28, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "April 27, 2026",
+    "tag": "Daily Brief"
+  },
+  {
+    "title": "April 26, 2026",
+    "tag": "Daily Brief"
+  }
 ]
